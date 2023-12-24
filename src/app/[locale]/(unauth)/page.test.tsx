@@ -6,19 +6,19 @@ import messages from '@/locales/en.json';
 import Index from './page';
 
 describe('Index page', () => {
-  describe('Render method', () => {
-    it('should have h1 tag', () => {
-      render(
-        <NextIntlClientProvider locale="en" messages={messages}>
-          <Index />
-        </NextIntlClientProvider>,
-      );
+    describe('Render method', () => {
+        it('should have h1 tag', () => {
+            render(
+                <NextIntlClientProvider locale="en" messages={messages}>
+                    <Index />
+                </NextIntlClientProvider>,
+            );
 
-      const heading = screen.getByRole('heading', {
-        name: /Boilerplate code/,
-      });
+            const heading = screen.getByRole('heading', {
+                name: /Boilerplate code/,
+            });
 
-      expect(heading).toBeInTheDocument();
+            expect(heading).toBeInTheDocument();
+        });
     });
-  });
 });

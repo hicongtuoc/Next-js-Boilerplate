@@ -5,29 +5,29 @@ import createMiddleware from 'next-intl/middleware';
 import { AppConfig } from './utils/AppConfig';
 
 const intlMiddleware = createMiddleware({
-  locales: AppConfig.locales,
-  localePrefix: AppConfig.localePrefix,
-  defaultLocale: AppConfig.defaultLocale,
+    locales: AppConfig.locales,
+    localePrefix: AppConfig.localePrefix,
+    defaultLocale: AppConfig.defaultLocale,
 });
 
 export default authMiddleware({
-  publicRoutes: (req: NextRequest) =>
-    !req.nextUrl.pathname.includes('/dashboard'),
+    publicRoutes: (req: NextRequest) =>
+        !req.nextUrl.pathname.includes('/dashboard'),
 
-  beforeAuth: (req) => {
-    // Execute next-intl middleware before Clerk's auth middleware
-    return intlMiddleware(req);
-  },
+    beforeAuth: (req) => {
+        // Execute next-intl middleware before Clerk's auth middleware
+        return intlMiddleware(req);
+    },
 
-  // eslint-disable-next-line consistent-return
-  afterAuth(auth, req) {
-    // Handle users who aren't authenticated
-    if (!auth.userId && !auth.isPublicRoute) {
-      return redirectToSignIn({ returnBackUrl: req.url });
-    }
-  },
+    // eslint-disable-next-line consistent-return
+    afterAuth(auth, req) {
+        // Handle users who aren't authenticated
+        if (!auth.userId && !auth.isPublicRoute) {
+            return redirectToSignIn({ returnBackUrl: req.url });
+        }
+    },
 });
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+    matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
 };
